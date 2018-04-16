@@ -1,0 +1,8 @@
+{
+"name": "ThinkPad X1 Thermal",
+"description": "Display ThinkPad X1 YOGA (3rd gen) thermal sensors and Fan status",
+"shell-version": ["3.14.4"],
+  "url": "",
+  "uuid": "thinkpadx1thermal@jithurbide.baitosoft.ch",
+  "version": 1.0
+}

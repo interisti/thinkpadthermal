@@ -1,0 +1,43 @@
+.tpt-status-cpu,
+.tpt-status-gpu,
+.tpt-status-fan {
+	padding-top: 2px;
+	padding-left: 4px;
+}
+
+.tpt-unit-cpu,
+.tpt-unit-gpu
+{
+	font-size: 80%;
+	padding-top: 5px;
+	padding-right: 8px;
+}
+.tpt-unit-fan 
+{
+	font-size: 8px;
+	padding-top: 9px;
+}
+
+.tpt-box-title {
+	color: #ccc;
+	font-weight: bold;
+	font-size: 110%;
+	text-align: center;
+	width: 150px;
+}
+.tpt-box-name {
+	color: #aaa;
+	font-weight: bold;
+	text-align: left;
+	width: 50px;
+}
+.tpt-box-value {
+	font-weight: bold;
+	text-align: right;
+	width: 90px;
+}
+
+.tpt-box-title,
+.tpt-box-name,
+.tpt-box-value {
+}
