@@ -22,35 +22,32 @@ const ThinkPadThermalStatusIcon = new Lang.Class({
 		this._box = new St.BoxLayout();
 
 		this._cpu_icon	= this._get_icon('cpu');
-		//this._gpu_icon 	= this._get_icon('gpu');
 		this._fan_icon	= this._get_icon('fan');
 
 		this._cpu_value = new St.Label({ text: "0", 	style_class: "tpt-status-cpu"});
-		//this._gpu_value = new St.Label({ text: "0", 	style_class: "tpt-status-gpu"});
 		this._fan_value = new St.Label({ text: "0", 	style_class: "tpt-status-fan"});
 
 		this._cpu_unit	= new St.Label({ text: this._get_unit("cpu"), style_class: "tpt-unit-cpu" });
-		//this._gpu_unit	= new St.Label({ text: this._get_unit("gpu"), style_class: "tpt-unit-gpu" });
 		this._fan_unit	= new St.Label({ text: this._get_unit("fan"), style_class: "tpt-unit-fan" });
 
 		this._box.add_actor (this._cpu_icon);
-    this._box.add_actor (this._cpu_value);
-    this._box.add_actor (this._cpu_unit);
+		this._box.add_actor (this._cpu_value);
+		this._box.add_actor (this._cpu_unit);
 
-    this._box.add_actor (this._fan_icon);
-    this._box.add_actor (this._fan_value);
-    this._box.add_actor (this._fan_unit);
+		this._box.add_actor (this._fan_icon);
+		this._box.add_actor (this._fan_value);
+		this._box.add_actor (this._fan_unit);
 
 		this.actor.add_actor(this._box);
 
-    this._layouts = new Array();
+		this._layouts = new Array();
 
 	},
 	create_menu : function(name, sensors, values, units)
 	{
 		this._menu = new LayoutMenuItem.LayoutMenuItem(name);
-        this.menu.addMenuItem(this._menu);
-   // global.log("From menu sensor numbers is : "+ sensors.length);
+        	this.menu.addMenuItem(this._menu);
+
 		for (let i = 0; i < sensors.length; ++i) {
 			let layout = new LayoutMenuItem.LayoutMenuItem(sensors[i], values[i], units[i]);
 			this._layouts.push(layout);

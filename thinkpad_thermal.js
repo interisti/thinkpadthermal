@@ -20,51 +20,36 @@ const ThinkPadThermal = new Lang.Class({
 	},
 	_load : 	function ()
 	{
-		this.timer = 5000;
+		this.timer = 1000;
 
-		this._sensorNames = Array(
-			"CPU",
-			"APS",
-			"PCM",
-			"GPU",
-			"BAT",
-			"UBS",
-			"BAT",
-			"UBP",
-			"BUS",
-			"PCI",
-			"PWR"
-		);
-		this._sensorUnits = Array("\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C","\u00b0C");
+		this._sensorNames = Array("CPU");
+		this._sensorUnits = Array("\u00b0C");
+		this._sensorValues = Array("0");
 		this._fanNames = Array("status", "speed", "level");
 		this._fanUnits = Array(null, "RPM", null);
+		this._fanValues = Array("0","0","0");
+
 	},
 	_update : 	function ()
 	{
-	  global.log("update thinkpad")
 		let newSensorNames	= Array();
-    let newSensorValues = Array();
-   // global.log("From thinkpad_thermal file not found");
+		let newSensorValues = Array();
 		let tempFile = GLib.file_get_contents('/sys/devices/virtual/hwmon/hwmon0/temp1_input');
-    let tempString 	= tempFile[1].toString('utf8');
-    // global.log("Value of string : " + tempString + " of type : " + typeof tempString );
-    newSensorNames.push("CPU");
-    newSensorValues.push(tempString);
+		let tempString 	= tempFile[1].toString('utf8');
+		newSensorNames.push("CPU");
+		newSensorValues.push(tempString);
 
 
-    this._sensorValues = newSensorValues;
-    this._sensorNames  = newSensorNames;
+		this._sensorValues = newSensorValues;
+		this._sensorNames  = newSensorNames;
 
-    //global.log("Internal sensor value : " + this._sensorValues[0] + " of type " + typeof this._sensorValues[0])
+		let fanFile 	= GLib.file_get_contents('/proc/acpi/ibm/fan');
+		let fanString 	= ("" + fanFile[1]).split("\n");
 
-    let fanFile 	= GLib.file_get_contents('/proc/acpi/ibm/fan');
-    let fanString 	= ("" + fanFile[1]).split("\n");
+		this._fanValues[0] = ("" + fanString[0]).replace("status:\t\t","");
+		this._fanValues[1] = ("" + fanString[1]).replace("speed:\t\t","");
+		this._fanValues[2] = ("" + fanString[2]).replace("level:\t\t","");
 
-    this._fanValues[0] = ("" + fanString[0]).replace("status:\t\t","");
-    this._fanValues[1] = ("" + fanString[1]).replace("speed:\t\t","");
-    this._fanValues[2] = ("" + fanString[2]).replace("level:\t\t","");
-
-    //global.log("Internal fan value : " + this._fanValues[1] + " of type " + typeof this._fanValues[1])
 
 	},
 	_update_speeds : function ()
@@ -72,13 +57,12 @@ const ThinkPadThermal = new Lang.Class({
 		this._update();
 		this._status_icon._set_values(this._sensorValues[0],this._fanValues[1]);
 
-   // global.log("Number of sensors to update : " + this._sensorValues.length)
 		for (var i = 0; i < this._sensorValues.length; i++) {
 			this._sensorValues[i]+=" \u00b0C";
 		};
 		this._fanValues[1]+=" RPM";
 
-		this._updatedSensorValues = this._sensorValues.concat(this._fanValues[1]);
+		this._updatedSensorValues = this._sensorValues.concat(this._fanValues[0],this._fanValues[1],this._fanValues[2]);
 		this._status_icon.update_values(this._updatedSensorValues);
 
 		return true;
@@ -101,17 +85,17 @@ const ThinkPadThermal = new Lang.Class({
 		this._fanValues 	= new Array();
 		this._fanNames 		= new Array();
 		this._fanUnits		= new Array();
-    global.log("Loading ...");
+		global.log("Loading ...");
 		this._load();
-    global.log("Status_icon will be created");
+		global.log("Status_icon will be created");
 		this._status_icon = new ThinkPadThermalStatusIcon.ThinkPadThermalStatusIcon(this);
 		global.log("Global timer will be created");
 		this._timerid = Mainloop.timeout_add(this.timer, Lang.bind(this, this._update_speeds));
-    global.log("Panel addes");
+		global.log("Panel addes");
 		Panel.addToStatusArea('thinkpadthermal', this._status_icon, 0);
-    global.log("menu creation");
-    this._create_menu();
-    global.log("Value update");
+		global.log("menu creation");
+		this._create_menu();
+		global.log("Value update");
 		this._update();
 
 
