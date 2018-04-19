@@ -1,16 +1,16 @@
-const Lang 		= imports.lang;
-const Gio 		= imports.gi.Gio;
-const GLib 		= imports.gi.GLib;
-const Mainloop 	= imports.mainloop;
-const Panel 	= imports.ui.main.panel;
+var Lang 		= imports.lang;
+var Gio 		= imports.gi.Gio;
+var GLib 		= imports.gi.GLib;
+var Mainloop 	= imports.mainloop;
+var Panel 	= imports.ui.main.panel;
 
-const Gettext 	= imports.gettext;
-const _ 		= Gettext.gettext;
+var Gettext 	= imports.gettext;
+var _ 		= Gettext.gettext;
 
-const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const ThinkPadThermalStatusIcon = Extension.imports.thinkpad_thermal_status_icon;
+var Extension = imports.misc.extensionUtils.getCurrentExtension();
+var ThinkPadThermalStatusIcon = Extension.imports.thinkpad_thermal_status_icon;
 
-const ThinkPadThermal = new Lang.Class({
+var ThinkPadThermal = new Lang.Class({
 
 	Name: 'ThinkPadThermal',
 	_init : 	function ()
@@ -36,8 +36,9 @@ const ThinkPadThermal = new Lang.Class({
 		let newSensorValues = Array();
 		let tempFile = GLib.file_get_contents('/sys/devices/virtual/hwmon/hwmon0/temp1_input');
 		let tempString 	= tempFile[1].toString('utf8');
+		let tmpNumeric = tempString / 1000;
 		newSensorNames.push("CPU");
-		newSensorValues.push(tempString);
+		newSensorValues.push(tmpNumeric);
 
 
 		this._sensorValues = newSensorValues;

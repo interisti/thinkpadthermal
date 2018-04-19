@@ -1,18 +1,18 @@
-const St 		= imports.gi.St;
-const Shell 	= imports.gi.Shell;
-const PanelMenu = imports.ui.panelMenu;
-const PopupMenu = imports.ui.popupMenu;
-const Main = imports.ui.main;
-const Gtk = imports.gi.Gtk;
-const Clutter = imports.gi.Clutter;
+var St 		= imports.gi.St;
+var Shell 	= imports.gi.Shell;
+var PanelMenu = imports.ui.panelMenu;
+var PopupMenu = imports.ui.popupMenu;
+var Main = imports.ui.main;
+var Gtk = imports.gi.Gtk;
+var Clutter = imports.gi.Clutter;
 
-const Lang 		= imports.lang;
-const Gettext 	= imports.gettext;
-const _ 		= Gettext.gettext;
-const Extension = imports.misc.extensionUtils.getCurrentExtension();
-const LayoutMenuItem = Extension.imports.layout_menu_item;
+var Lang 		= imports.lang;
+var Gettext 	= imports.gettext;
+var _ 		= Gettext.gettext;
+var Extension = imports.misc.extensionUtils.getCurrentExtension();
+var LayoutMenuItem = Extension.imports.layout_menu_item;
 
-const ThinkPadThermalStatusIcon = new Lang.Class({
+var ThinkPadThermalStatusIcon = new Lang.Class({
 	Name: 'ThinkPadThermalStatusIcon',
 	Extends: PanelMenu.Button,
 	_init : function (thinkpad_thermal)
@@ -107,7 +107,7 @@ const ThinkPadThermalStatusIcon = new Lang.Class({
 	},
 	_set_values : function(cpu, fan)
 	{
-		this._cpu_value.set_text((cpu/1000).toString());
+		this._cpu_value.set_text((cpu).toString());
 		this._fan_value.set_text(fan);
 	}
 });

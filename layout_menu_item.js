@@ -1,8 +1,8 @@
-const Lang = imports.lang;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
+var Lang = imports.lang;
+var PopupMenu = imports.ui.popupMenu;
+var St = imports.gi.St;
 
-const LayoutMenuItem = new Lang.Class({
+var LayoutMenuItem = new Lang.Class({
 	Name: 'LayoutMenuItem',
 	Extends: PopupMenu.PopupBaseMenuItem,
 	_init : function (sensor, value=null, unit=null)
