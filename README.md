@@ -10,3 +10,17 @@ https://wiki.gnome.org/Projects/GnomeShell/Extensions/StepByStepTutorial#myFirst
 > To visualize the changes, you need to have enabled the extension. To enable the extension use gnome-tweak-tool.
 
 > After that, every time you make a change, you will have to save the file and restart the shell (**Alt+F2** , write **"r"** without quotes, **enter**).
+
+
+### look for gnome errors
+`journalctl /usr/bin/gnome-shell -f`
+
+
+### Create a symlink from ext dir to gnome extensions
+
+`ln -s /home/nika/projects/interisti/thinkpadthermal /home/nika/.local/share/gnome-shell/extensions/thinkpadthermal@nikoloznikabadze.com`
+
+
+### Sample upgrade to es6
+
+https://extensions.gnome.org/review/10363
