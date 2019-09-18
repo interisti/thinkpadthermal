@@ -1,52 +1,50 @@
-var St 		= imports.gi.St;
-var Shell 	= imports.gi.Shell;
+var St = imports.gi.St;
+var Shell = imports.gi.Shell;
 var PanelMenu = imports.ui.panelMenu;
 var PopupMenu = imports.ui.popupMenu;
 var Main = imports.ui.main;
 var Gtk = imports.gi.Gtk;
 var Clutter = imports.gi.Clutter;
 
-var Lang 		= imports.lang;
-var Gettext 	= imports.gettext;
-var _ 		= Gettext.gettext;
+var Lang = imports.lang;
+var Gettext = imports.gettext;
+var _ = Gettext.gettext;
 var Extension = imports.misc.extensionUtils.getCurrentExtension();
 var LayoutMenuItem = Extension.imports.layout_menu_item;
 
 var ThinkPadThermalStatusIcon = new Lang.Class({
 	Name: 'ThinkPadThermalStatusIcon',
 	Extends: PanelMenu.Button,
-	_init : function (thinkpad_thermal)
-	{
+	_init: function (thinkpad_thermal) {
 		this.parent(0.0);
 
 		this._box = new St.BoxLayout();
 
-		this._cpu_icon	= this._get_icon('cpu');
-		this._fan_icon	= this._get_icon('fan');
+		this._cpu_icon = this._get_icon('cpu');
+		this._fan_icon = this._get_icon('fan');
 
-		this._cpu_value = new St.Label({ text: "0", 	style_class: "tpt-status-cpu"});
-		this._fan_value = new St.Label({ text: "0", 	style_class: "tpt-status-fan"});
+		this._cpu_value = new St.Label({ text: "0", style_class: "tpt-status-cpu" });
+		this._fan_value = new St.Label({ text: "0", style_class: "tpt-status-fan" });
 
-		this._cpu_unit	= new St.Label({ text: this._get_unit("cpu"), style_class: "tpt-unit-cpu" });
-		this._fan_unit	= new St.Label({ text: this._get_unit("fan"), style_class: "tpt-unit-fan" });
+		this._cpu_unit = new St.Label({ text: this._get_unit("cpu"), style_class: "tpt-unit-cpu" });
+		this._fan_unit = new St.Label({ text: this._get_unit("fan"), style_class: "tpt-unit-fan" });
 
-		this._box.add_actor (this._cpu_icon);
-		this._box.add_actor (this._cpu_value);
-		this._box.add_actor (this._cpu_unit);
+		this._box.add_actor(this._cpu_icon);
+		this._box.add_actor(this._cpu_value);
+		this._box.add_actor(this._cpu_unit);
 
-		this._box.add_actor (this._fan_icon);
-		this._box.add_actor (this._fan_value);
-		this._box.add_actor (this._fan_unit);
+		this._box.add_actor(this._fan_icon);
+		this._box.add_actor(this._fan_value);
+		this._box.add_actor(this._fan_unit);
 
 		this.actor.add_actor(this._box);
 
 		this._layouts = new Array();
 
 	},
-	create_menu : function(name, sensors, values, units)
-	{
+	create_menu: function (name, sensors, values, units) {
 		this._menu = new LayoutMenuItem.LayoutMenuItem(name);
-        	this.menu.addMenuItem(this._menu);
+		this.menu.addMenuItem(this._menu);
 
 		for (let i = 0; i < sensors.length; ++i) {
 			let layout = new LayoutMenuItem.LayoutMenuItem(sensors[i], values[i], units[i]);
@@ -56,17 +54,15 @@ var ThinkPadThermalStatusIcon = new Lang.Class({
 		this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
 	},
-	update_values : function(values)
-	{
-	 // global.log("From status icon update values number to update is : " + values.length)
+	update_values: function (values) {
+		// global.log("From status icon update values number to update is : " + values.length)
 
 		for (let i = 0; i < values.length; ++i) {
-		      //global.log("Value n°"+i+ " "  + values[i] );
-          this._layouts[i].update_values(values[i]);
-        }
+			//global.log("Value n°"+i+ " "  + values[i] );
+			this._layouts[i].update_values(values[i]);
+		}
 	},
-	_get_icon: function(name, size)
-	{
+	_get_icon: function (name, size) {
 		if (arguments.length == 1)
 			size = 16;
 
@@ -88,8 +84,7 @@ var ThinkPadThermalStatusIcon = new Lang.Class({
 			icon_size: size
 		});
 	},
-	_get_unit: function(name)
-	{
+	_get_unit: function (name) {
 		let unit = "";
 
 		switch (name) {
@@ -105,8 +100,7 @@ var ThinkPadThermalStatusIcon = new Lang.Class({
 
 		return unit;
 	},
-	_set_values : function(cpu, fan)
-	{
+	_set_values: function (cpu, fan) {
 		this._cpu_value.set_text((cpu).toString());
 		this._fan_value.set_text(fan);
 	}
