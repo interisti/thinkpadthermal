@@ -1,6 +1,14 @@
 # thinkpadthernmal
 
 
+Updated version of [thinkpad-x1-thermal](https://extensions.gnome.org/extension/1419/thinkpad-x1-thermal/) gnome extension to work on ubuntu 19.XX.
+
+Cloned from https://bitbucket.org/jithurbide/thinkpadx1thermal
+
+
+
+# Dev Notes
+
 ## Resources
 
 https://wiki.gnome.org/Projects/GnomeShell/Extensions/StepByStepTutorial#myFirstExtension
