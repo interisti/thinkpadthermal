@@ -25,7 +25,7 @@ class ThinkPadThermal {
   _update() {
     let newSensorNames = Array();
     let newSensorValues = Array();
-    let tempFile = GLib.file_get_contents('/sys/class/hwmon/hwmon3/temp1_input');
+    let tempFile = GLib.file_get_contents('/sys/class/hwmon/hwmon4/temp1_input');
     let tempString = imports.byteArray.toString(tempFile[1], 'utf8');
     let tmpNumeric = tempString / 1000;
     newSensorNames.push("CPU");
