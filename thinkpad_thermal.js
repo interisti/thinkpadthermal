@@ -20,12 +20,15 @@ class ThinkPadThermal {
     this._fanNames = Array("status", "speed", "level");
     this._fanUnits = Array(null, "RPM", null);
     this._fanValues = Array("0", "0", "0");
+    this._hwmonIndex = 0;
   }
 
   _update() {
     let newSensorNames = Array();
     let newSensorValues = Array();
-    let tempFile = GLib.file_get_contents('/sys/class/hwmon/hwmon4/temp1_input');
+    let tempFile = GLib.file_get_contents(
+      `/sys/class/hwmon/hwmon${this._hwmonIndex}/temp1_input`
+    );
     let tempString = imports.byteArray.toString(tempFile[1], 'utf8');
     let tmpNumeric = tempString / 1000;
     newSensorNames.push("CPU");
@@ -80,6 +83,15 @@ class ThinkPadThermal {
       );
       this._menu_created = true;
     }
+  }
+
+  _findHwmonIndex() {
+    let hwmons = GLib.file_get_contents('/sys/class/hwmon/hwmon*/name');
+    let hwmonsString = (
+      "" + imports.byteArray.toString(fanFile[1], 'utf8')
+    ).split("\n");
+
+    this._hwmonIndex = hwmons.findIndex('coretemp');
   }
 
   enable() {
