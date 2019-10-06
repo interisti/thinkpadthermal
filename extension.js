@@ -1,7 +1,7 @@
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const { ThinkPadThermal } = Me.imports.thinkpad_thermal.exports;
+var Extension = imports.misc.extensionUtils.getCurrentExtension();
+var ThinkPadThermal = Extension.imports.thinkpad_thermal;
 
 function init() {
   global.log("Start programm")
-  return new ThinkPadThermal();
+  return new ThinkPadThermal.ThinkPadThermal();
 }

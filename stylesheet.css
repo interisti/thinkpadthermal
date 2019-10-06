@@ -19,15 +19,15 @@
 }
 
 .tpt-box-title {
-	/* color: #ccc; */
+	color: #ccc;
 	font-weight: bold;
 	text-align: center;
 	font-size: 100%;
 	width: 200px;
 }
 .tpt-box-name {
-	/* color: #aaa; */
-	/* font-weight: bold; */
+	color: #aaa;
+	font-weight: bold;
 	text-align: left;
 	width: 110px;
 }

@@ -1,44 +1,40 @@
-const GObject = imports.gi.GObject;
-const PopupMenu = imports.ui.popupMenu;
-const St = imports.gi.St;
+var Lang = imports.lang;
+var PopupMenu = imports.ui.popupMenu;
+var St = imports.gi.St;
 
-const LayoutMenuItem = GObject.registerClass(
-  class _LayoutMenuItem extends PopupMenu.PopupBaseMenuItem {
-    _init(sensor, value = null, unit = null) {
-      super._init()
+var LayoutMenuItem = new Lang.Class({
+  Name: 'LayoutMenuItem',
+  Extends: PopupMenu.PopupBaseMenuItem,
+  _init: function (sensor, value = null, unit = null) {
+    this.parent();
 
-      if (value == null) {
-        this._nameBox = new St.BoxLayout({
-          vertical: true,
-          style_class: "tpt-box-title"
-        });
-      } else {
-        this._nameBox = new St.BoxLayout({
-          vertical: true,
-          style_class: "tpt-box-name"
-        });
-      }
-      this._sensor_name = new St.Label({ text: sensor });
-      this._nameBox.add_actor(this._sensor_name);
-      this.add(this._nameBox);
-
-      if (value != null) {
-        this._valueBox = new St.BoxLayout({
-          vertical: true,
-          style_class: "tpt-box-value"
-        });
-        this._sensor_value = new St.Label({ text: value });
-        this._valueBox.add_actor(this._sensor_value);
-
-        this.add(this._valueBox);
-      }
+    if (value == null) {
+      this._nameBox = new St.BoxLayout({
+        vertical: true,
+        style_class: "tpt-box-title"
+      });
+    } else {
+      this._nameBox = new St.BoxLayout({
+        vertical: true,
+        style_class: "tpt-box-name"
+      });
     }
+    this._sensor_name = new St.Label({ text: sensor });
+    this._nameBox.add_actor(this._sensor_name);
+    this.actor.add(this._nameBox);
 
-    update_values(value) {
-      this._sensor_value.set_text(value);
+    if (value != null) {
+      this._valueBox = new St.BoxLayout({
+        vertical: true,
+        style_class: "tpt-box-value"
+      });
+      this._sensor_value = new St.Label({ text: value });
+      this._valueBox.add_actor(this._sensor_value);
+
+      this.actor.add(this._valueBox);
     }
-  });
-
-var exports = {
-  LayoutMenuItem
-}
+  },
+  update_values: function (value) {
+    this._sensor_value.set_text(value);
+  }
+});
